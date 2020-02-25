@@ -1,5 +1,5 @@
 # Light and Temperature sensor for domotica
-LM335 and BMP280 temperature sensor in combination with a lightsensor based on arduino to control the blinds and heating.
+LM335 and BMP280 temperature sensor in combination with a BH1750 (GY-302) and LDR lightsensor based on arduino to control the blinds and heating.
 Values shown on a 128x64 OLED display and in the Serial monitor.
 If the temperature drops below 21°C the heating turns on. If the temperature is higher then 21°C there is no heating.
 If it gets dark the blinds go down and when it gets light again they go up.
