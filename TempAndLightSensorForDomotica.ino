@@ -2,6 +2,8 @@
 #include <SPI.h>
 #include <Adafruit_BMP280.h>
 Adafruit_BMP280 bmp;
+#include <BH1750.h>
+BH1750 lightMeter;
 #include <Adafruit_SSD1306.h>
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -29,6 +31,7 @@ float temperatureK;
 float bmpTemp;
 float bmpPress;
 float lightValue;
+float lux;
 float avgTemp;
 bool blinds;
 bool heating;
@@ -51,13 +54,14 @@ void setup() {
   }
 
   //SSD1306 OLED:
-  /*
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
     setColor(255, 0, 0); // RED
     for (;;);
-    }
-  */
+  }
+
+  //BH1750 Sensor:
+  lightMeter.begin();
 }
 
 void loop() {
@@ -72,6 +76,9 @@ void loop() {
   //BMP280:
   bmpTemp = bmp.readTemperature();
   bmpPress = bmp.readPressure() / 100;
+
+  //BH1750:
+  lux = lightMeter.readLightLevel();
 
   //Light:
   lightValue = analogRead(lightPin);
@@ -95,6 +102,11 @@ void loop() {
   Serial.print(bmpPress);
   Serial.println(" hPa");
   Serial.println();
+  Serial.println("BH1750 Sensor:");
+  Serial.print("Light = ");
+  Serial.print(lux);
+  Serial.print(" lux");
+  Serial.println();
   Serial.print("Average temperature = ");
   Serial.print(avgTemp);
   Serial.println(" °C");
@@ -105,29 +117,40 @@ void loop() {
   //OLED print:
   display.clearDisplay();
   display.setTextSize(1);
+
   display.setCursor(0, 0);
   display.setTextColor(WHITE);
   display.println("LM335:");
-  display.setCursor(0, 10);
+  display.setCursor(0, 8);
   display.setTextColor(BLACK, WHITE);
   display.print((char)247); // ' ° ' symbol
   display.print("C: ");
   display.print(temperatureC, 1);
-  display.setCursor(0, 20);
+
+  display.setCursor(0, 16);
   display.setTextColor(WHITE);
   display.println("BMP280:");
-  display.setCursor(0, 30);
+  display.setCursor(0, 24);
   display.setTextColor(BLACK, WHITE);
   display.print((char)247); // ' ° ' symbol
   display.print("C: ");
   display.print(bmpTemp, 1);
-  display.setCursor(0, 40);
+
+  display.setCursor(0, 32);
   display.setTextColor(WHITE);
+  display.println("BH1750:");
+  display.setCursor(0, 40);
+  display.setTextColor(BLACK, WHITE);
   display.print("Light = ");
+  display.print(lux);
+  display.print(" lux");
+
+  display.setCursor(0, 48);
+  display.setTextColor(WHITE);
+  display.print("LDR = ");
   display.println(lightValue);
   display.print("Blinds = ");
-  display.print(blinds);
-  display.setCursor(0, 50);
+  display.println(blinds);
   display.print("Heating = ");
   display.print(heating);
   display.display();
