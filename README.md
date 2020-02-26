@@ -6,5 +6,6 @@ If it gets dark the blinds go down and when it gets light again they go up.
 
 ![Breadboard](https://github.com/DriesDebouver/Light-and-Temperature-sensor-for-domotica/blob/master/Breadboard%20circuit.jpeg)
 ![OLED Display](https://github.com/DriesDebouver/Light-and-Temperature-sensor-for-domotica/blob/master/OLED%20Displaying%20values.jpg)
+![Serial Monitor Output](https://github.com/DriesDebouver/Light-and-Temperature-sensor-for-domotica/blob/master/SerialMonitor.JPG)
 
 Exercise for the "Sensors & Interfacing" course in the Internet of Things education.
