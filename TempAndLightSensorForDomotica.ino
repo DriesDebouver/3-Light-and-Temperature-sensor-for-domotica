@@ -105,14 +105,15 @@ void loop() {
   Serial.println("BH1750 Sensor:");
   Serial.print("Light = ");
   Serial.print(lux);
-  Serial.print(" lux");
+  Serial.println(" lux");
+  Serial.println();
+  Serial.println("LDR Sensor:");
+  Serial.print("Lightintensity = ");
+  Serial.println(lightValue);
   Serial.println();
   Serial.print("Average temperature = ");
   Serial.print(avgTemp);
   Serial.println(" °C");
-  Serial.print("Lightintensity = ");
-  Serial.println(lightValue);
-  Serial.println();
 
   //OLED print:
   display.clearDisplay();
